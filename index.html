@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEBULA • best website design</title>
+    <!-- Font Awesome 5 (free) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ===== RESET & GLOBAL ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: #0b0c15;
+            color: #eef2ff;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        /* smooth scroll & selection */
+        html {
+            scroll-behavior: smooth;
+        }
+        ::selection {
+            background: #a78bfa;
+            color: #0b0c15;
+        }
+
+        /* ===== CUSTOM CURSOR (optional but premium) ===== */
+        .cursor {
+            width: 12px;
+            height: 12px;
+            background: #c4b5fd;
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: difference;
+            transition: transform 0.1s ease;
+            transform: translate(-50%, -50%);
+        }
+        .cursor-follower {
+            width: 40px;
+            height: 40px;
+            border: 2px solid rgba(167, 139, 250, 0.4);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9998;
+            transition: 0.08s linear;
+            transform: translate(-50%, -50%);
+        }
+
+        /* ===== REUSABLE & LAYOUT ===== */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        /* gradient backgrounds */
+        .hero, .footer {
+            background: radial-gradient(ellipse at 30% 40%, #1e1b4b, #0b0c15 70%);
+        }
+
+        /* headings */
+        h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            font-weight: 800;
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #fff, #c4b5fd, #818cf8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #f0f0ff, #c7d2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 2rem;
+        }
+
+        h2 i {
+            color: #8b5cf6;
+            margin-right: 0.75rem;
+        }
+
+        .glow-text {
+            color: #ddd6fe;
+            font-size: 1.2rem;
+            max-width: 600px;
+        }
+
+        /* buttons */
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.2rem;
+            margin: 2.5rem 0 1rem;
+        }
+        .btn {
+            padding: 0.9rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid transparent;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+        }
+        .btn-primary {
+            background: #8b5cf6;
+            color: #fff;
+            box-shadow: 0 10px 25px -5px #6d28d9;
+        }
+        .btn-primary:hover {
+            background: #7c3aed;
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -8px #5b21b6;
+        }
+        .btn-outline {
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.02);
+            color: #e2e0ff;
+            backdrop-filter: blur(8px);
+        }
+        .btn-outline:hover {
+            border-color: #a78bfa;
+            background: rgba(139, 92, 246, 0.15);
+            transform: translateY(-4px);
+        }
+
+        /* navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 100;
+        }
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(145deg, #ffffff, #a78bfa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+        .nav-links a {
+            text-decoration: none;
+            color: #e0e7ff;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: 0.2s;
+            border-bottom: 2px solid transparent;
+            padding-bottom: 5px;
+        }
+        .nav-links a:hover {
+            color: white;
+            border-bottom-color: #8b5cf6;
+        }
+        .menu-toggle {
+            display: none;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+
+        /* hero layout */
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 3rem;
+        }
+        .hero-badge {
+            background: rgba(139, 92, 246, 0.2);
+            border: 1px solid #3b2a6b;
+            border-radius: 50px;
+            padding: 0.3rem 1.2rem;
+            font-size: 0.9rem;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(5px);
+            color: #b9aafd;
+        }
+        .floating-card {
+            background: rgba(20, 15, 45, 0.45);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 40px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 35px 75px rgba(0,0,0,0.6);
+            transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
+            transition: 0.5s;
+        }
+        .floating-card:hover {
+            transform: perspective(1000px) rotateY(-3deg) rotateX(1deg) translateY(-8px);
+        }
+        .code-icon {
+            display: flex;
+            gap: 1rem;
+            font-size: 2.8rem;
+            color: #cbd5e1;
+            margin-bottom: 1rem;
+        }
+        .code-icon i {
+            background: #15122e;
+            padding: 0.8rem;
+            border-radius: 20px;
+            border: 1px solid #342e5a;
+        }
+
+        /* stats */
+        .stats {
+            display: flex;
+            gap: 2.5rem;
+            margin-top: 2rem;
+        }
+        .stat-item h3 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #f5f3ff;
+        }
+        .stat-item p {
+            color: #9ca3af;
+            letter-spacing: 1px;
+        }
+
+        /* services / cards */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .service-card {
+            background: rgba(18, 14, 43, 0.5);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 30px;
+            padding: 2.2rem 1.8rem;
+            transition: 0.25s ease;
+            box-shadow: 0 15px 35px -15px #000000;
+        }
+        .service-card:hover {
+            border-color: #8b5cf6;
+            transform: translateY(-12px) scale(1.02);
+            background: #151032;
+        }
+        .service-card i {
+            font-size: 2.7rem;
+            background: linear-gradient(145deg, #a78bfa, #6366f1);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+        }
+        .service-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
+        }
+        .service-card p {
+            color: #b9b7d3;
+        }
+
+        /* project showcase */
+        .project-slider {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .project-item {
+            flex: 1 1 280px;
+            background: #140f2b;
+            border-radius: 30px;
+            padding: 1.8rem;
+            border: 1px solid #2a2352;
+            transition: all 0.3s;
+        }
+        .project-item:hover {
+            border-color: #8b5cf6;
+            box-shadow: 0 30px 40px -20px #5f3dc3;
+        }
+        .project-img {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #2e265c, #18133a);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: #c9b6ff;
+            margin-bottom: 1.5rem;
+        }
+
+        /* contact section */
+        .contact-form {
+            background: rgba(15, 12, 38, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid #322b5a;
+            border-radius: 50px;
+            padding: 3rem;
+            max-width: 800px;
+            margin: 2rem auto 0;
+        }
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .input-group input, .contact-form textarea {
+            width: 100%;
+            background: #0f0c24;
+            border: 1px solid #2e265c;
+            border-radius: 60px;
+            padding: 1.2rem 2rem;
+            font-size: 1.1rem;
+            color: white;
+            outline: none;
+            transition: 0.2s;
+        }
+        .input-group input:focus, .contact-form textarea:focus {
+            border-color: #a78bfa;
+            box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.2);
+        }
+        .input-group input {
+            flex: 1 1 250px;
+        }
+        .contact-form textarea {
+            border-radius: 30px;
+            resize: vertical;
+            margin: 1.5rem 0;
+        }
+        .contact-form button {
+            border: none;
+            font-size: 1.3rem;
+            padding: 1rem 3rem;
+            border-radius: 60px;
+            background: #8b5cf6;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 8px 18px #4c1d95;
+        }
+        .contact-form button:hover {
+            background: #a78bfa;
+            transform: scale(1.02);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0 3rem;
+            border-top: 1px solid #1e1a3a;
+        }
+        .social i {
+            font-size: 2rem;
+            margin: 1rem 0.8rem;
+            color: #a78bfa;
+            transition: 0.2s;
+        }
+        .social i:hover {
+            color: white;
+            transform: translateY(-5px);
+        }
+
+        /* responsive */
+        @media (max-width: 900px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .navbar .nav-links { display: none; }
+            .menu-toggle { display: block; }
+            .floating-card { transform: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- custom cursor (premium detail) -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-follower" id="cursorFollower"></div>
+
+    <!-- navigation -->
+    <nav class="navbar">
+        <span class="logo">✦ NEBULA</span>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#work">Work</a>
+            <a href="#services">Services</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="menu-toggle"><i class="fas fa-bars"></i></div>
+    </nav>
+
+    <!-- hero section -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <span class="hero-badge"><i class="fas fa-crown" style="margin-right: 8px;"></i> #1 design worldwide</span>
+                <h1>We build the best websites on earth.</h1>
+                <p class="glow-text">Minimal, futuristic, interactive — exactly what the world's top brands use. All in one file.</p>
+                <div class="btn-group">
+                    <a href="#contact" class="btn btn-primary"><i class="fas fa-bolt"></i> start project</a>
+                    <a href="#work" class="btn btn-outline"><i class="fas fa-eye"></i> see showcase</a>
+                </div>
+                <div class="stats">
+                    <div class="stat-item"><h3>150+</h3><p>global awards</p></div>
+                    <div class="stat-item"><h3>99%</h3><p>happy clients</p></div>
+                </div>
+            </div>
+            <div class="floating-card">
+                <div class="code-icon">
+                    <i class="fab fa-html5"></i>
+                    <i class="fab fa-css3-alt"></i>
+                    <i class="fab fa-js"></i>
+                </div>
+                <h3 style="font-size: 2rem; margin-bottom: 1rem;">"single file —<br>infinite magic"</h3>
+                <p style="color: #cbd5e1;">HTML, CSS, JavaScript combined with glassmorphism, 3D transforms, and smooth interactions. Best in class.</p>
+                <div style="margin: 2rem 0 1rem;"><i class="fas fa-code" style="color: #8b5cf6;"></i>  <span style="color: #a5b4fc;">built with passion</span></div>
+                <div style="background: #0f0c24; border-radius: 30px; padding: 0.8rem 1.5rem; border: 1px solid #3f3470;">
+                    <i class="fas fa-star" style="color: #fbbf24;"></i><i class="fas fa-star" style="color: #fbbf24;"></i><i class="fas fa-star" style="color: #fbbf24;"></i><i class="fas fa-star" style="color: #fbbf24;"></i><i class="fas fa-star" style="color: #fbbf24;"></i> <span style="margin-left: 10px;">5.0 (2.4k reviews)</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- services / features -->
+    <section id="services">
+        <div class="container">
+            <h2><i class="fas fa-circle-nodes"></i> universe‑class services</h2>
+            <div class="card-grid">
+                <div class="service-card"><i class="fas fa-cubes"></i><h3>3D interactive</h3><p>Three.js powered concepts, buttery 60fps, camera moves — we redefine UX.</p></div>
+                <div class="service-card"><i class="fas fa-meteor"></i><h3>motion design</h3><p>GSAP, Lottie, custom micro‑interactions that make users stay.</p></div>
+                <div class="service-card"><i class="fas fa-mobile-alt"></i><h3>pixel perfect</h3><p>Responsive from 320px to 4K, each component looks razor sharp.</p></div>
+                <div class="service-card"><i class="fas fa-chart-line"></i><h3>SEO • speed</h3><p>100/100 lighthouse, because best design also loads instantly.</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- work / projects (best of the best) -->
+    <section id="work" style="background: #080715;">
+        <div class="container">
+            <h2><i class="fas fa-globe"></i> award‑winning projects</h2>
+            <div class="project-slider">
+                <div class="project-item">
+                    <div class="project-img"><i class="fas fa-satellite"></i></div>
+                    <h3>ORBIT</h3>
+                    <p>Interactive space agency website · Awwwards SOTD</p>
+                </div>
+                <div class="project-item">
+                    <div class="project-img"><i class="fas fa-fan"></i></div>
+                    <h3>ZEPHYR</h3>
+                    <p>minimal fashion brand · CSS only animations</p>
+                </div>
+                <div class="project-item">
+                    <div class="project-img"><i class="fas fa-robot"></i></div>
+                    <h3>NEURA</h3>
+                    <p>AI startup · 3D metamodern glassmorphism</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- contact / get in touch (with javascript validation & effect) -->
+    <section id="contact">
+        <div class="container">
+            <h2 style="text-align: center;"><i class="fas fa-paper-plane"></i> let's create the best website</h2>
+            <div class="contact-form" id="contactForm">
+                <div class="input-group">
+                    <input type="text" placeholder="your name" id="nameInput">
+                    <input type="email" placeholder="email address" id="emailInput">
+                </div>
+                <textarea rows="4" placeholder="tell about your project..." id="messageInput"></textarea>
+                <button id="submitBtn"><i class="fas fa-rocket" style="margin-right: 10px;"></i> send message</button>
+                <p id="formFeedback" style="margin-top: 1.5rem; font-weight: 300; min-height: 24px;"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="social">
+                <i class="fab fa-x-twitter"></i>
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-dribbble"></i>
+                <i class="fab fa-behance"></i>
+            </div>
+            <p style="color: #7d7ba0;">© 2025 NEBULA — best website design worldwide · all in one file</p>
+        </div>
+    </footer>
+
+    <!-- javascript: custom cursor + form handler + interactive micro -->
+    <script>
+        (function() {
+            // ===== CUSTOM CURSOR (premium) =====
+            const cursor = document.getElementById('cursor');
+            const cursorFollower = document.getElementById('cursorFollower');
+            
+            if (cursor && cursorFollower) {
+                document.addEventListener('mousemove', (e) => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                    
+                    // follower with slight delay (using RAF for smoothness)
+                    requestAnimationFrame(() => {
+                        cursorFollower.style.left = e.clientX + 'px';
+                        cursorFollower.style.top = e.clientY + 'px';
+                    });
+                });
+
+                // hover effect on interactive elements
+                const interactiveElems = document.querySelectorAll('a, button, .service-card, .project-item, .btn');
+                interactiveElems.forEach(el => {
+                    el.addEventListener('mouseenter', () => {
+                        cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
+                        cursor.style.background = '#f0e9ff';
+                        cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.5)';
+                        cursorFollower.style.borderColor = '#c4b5fd';
+                    });
+                    el.addEventListener('mouseleave', () => {
+                        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+                        cursor.style.background = '#c4b5fd';
+                        cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
+                        cursorFollower.style.borderColor = 'rgba(167, 139, 250, 0.4)';
+                    });
+                });
+            }
+
+            // ===== CONTACT FORM (with javascript interaction) =====
+            const submitBtn = document.getElementById('submitBtn');
+            const nameInput = document.getElementById('nameInput');
+            const emailInput = document.getElementById('emailInput');
+            const messageInput = document.getElementById('messageInput');
+            const feedback = document.getElementById('formFeedback');
+
+            if (submitBtn) {
+                submitBtn.addEventListener('click', (e) => {
+                    e.preventDefault();  // no page reload
+                    
+                    let nameVal = nameInput ? nameInput.value.trim() : '';
+                    let emailVal = emailInput ? emailInput.value.trim() : '';
+                    let msgVal = messageInput ? messageInput.value.trim() : '';
+
+                    if (!nameVal || !emailVal || !msgVal) {
+                        feedback.innerHTML = '<span style="color: #fca5a5;"><i class="fas fa-exclamation-triangle"></i> all fields required — but you can still admire the design :)</span>';
+                        return;
+                    }
+                    if (!emailVal.includes('@') || !emailVal.includes('.')) {
+                        feedback.innerHTML = '<span style="color: #fcd34d;"><i class="fas fa-envelope"></i> please use a valid email. (mock mode, no data sent)</span>';
+                        return;
+                    }
+
+                    // success simulation (best website demo)
+                    feedback.innerHTML = '<span style="color: #a7f3d0;"><i class="fas fa-check-circle"></i> message received! (this is a demo — but you rock 🚀)</span>';
+                    
+                    // optional clear fields (just for ux)
+                    if (nameInput) nameInput.value = '';
+                    if (emailInput) emailInput.value = '';
+                    if (messageInput) messageInput.value = '';
+                });
+            }
+
+            // ===== extra interactive hover effect on cards (parallax micro) =====
+            const cards = document.querySelectorAll('.service-card, .project-item');
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateX = (y - centerY) / 20;
+                    const rotateY = (centerX - x) / 20;
+                    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+                });
+                card.addEventListener('mouseleave', () => {
+                    card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
+                });
+            });
+
+            // ===== simple counter stats (animated when visible) =====
+            const statNumbers = document.querySelectorAll('.stat-item h3');
+            const hasAnimated = {};
+
+            function animateStats() {
+                statNumbers.forEach((stat, idx) => {
+                    if (hasAnimated[idx]) return;
+                    const rect = stat.getBoundingClientRect();
+                    if (rect.top < window.innerHeight - 100) {
+                        hasAnimated[idx] = true;
+                        let target = stat.innerText.replace('+', '').replace('%', '');
+                        let suffix = stat.innerText.includes('+') ? '+' : (stat.innerText.includes('%') ? '%' : '');
+                        let start = 0;
+                        let end = parseInt(target);
+                        let duration = 1500;
+                        let stepTime = 20;
+                        let steps = duration / stepTime;
+                        let increment = end / steps;
+                        let current = 0;
+                        let timer = setInterval(() => {
+                            current += increment;
+                            if (current >= end) {
+                                stat.innerText = end + suffix;
+                                clearInterval(timer);
+                            } else {
+                                stat.innerText = Math.floor(current) + suffix;
+                            }
+                        }, stepTime);
+                    }
+                });
+            }
+
+            window.addEventListener('scroll', animateStats);
+            window.addEventListener('load', animateStats);
+        })();
+    </script>
+</body>
+</html>
