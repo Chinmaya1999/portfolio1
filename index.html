@@ -3,645 +3,523 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEBULA • best website design</title>
-    <!-- Font Awesome 5 (free) -->
+    <title>3D Cosmic Nexus | best webpage in the world</title>
+    <!-- Font Awesome for crisp icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        /* ===== RESET & GLOBAL ===== */
+        /* RESET & GLOBAL */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            font-family: 'Poppins', 'Segoe UI', system-ui, sans-serif;
         }
 
         body {
-            background: #0b0c15;
-            color: #eef2ff;
-            line-height: 1.5;
+            min-height: 100vh;
+            background: radial-gradient(circle at 30% 40%, #0b0f1e, #010101 90%);
+            color: white;
             overflow-x: hidden;
+            perspective: 1200px;
+            transform-style: preserve-3d;
         }
 
-        /* smooth scroll & selection */
-        html {
-            scroll-behavior: smooth;
-        }
-        ::selection {
-            background: #a78bfa;
-            color: #0b0c15;
-        }
-
-        /* ===== CUSTOM CURSOR (optional but premium) ===== */
-        .cursor {
-            width: 12px;
-            height: 12px;
-            background: #c4b5fd;
-            border-radius: 50%;
+        /* CUSTOM CURSOR GLOW (follows mouse) */
+        .cursor-glow {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle at center, rgba(100, 200, 255, 0.2) 0%, transparent 70%);
             position: fixed;
+            border-radius: 50%;
             pointer-events: none;
             z-index: 9999;
-            mix-blend-mode: difference;
-            transition: transform 0.1s ease;
+            mix-blend-mode: screen;
             transform: translate(-50%, -50%);
+            transition: transform 0.05s linear;
+            will-change: transform;
         }
-        .cursor-follower {
-            width: 40px;
-            height: 40px;
-            border: 2px solid rgba(167, 139, 250, 0.4);
-            border-radius: 50%;
+
+        /* 3D LAYERED BACKGROUND: stars + floating orbs */
+        .universe {
             position: fixed;
-            pointer-events: none;
-            z-index: 9998;
-            transition: 0.08s linear;
-            transform: translate(-50%, -50%);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            overflow: hidden;
+            transform-style: preserve-3d;
         }
 
-        /* ===== REUSABLE & LAYOUT ===== */
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 0 2rem;
+        .star-field {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: transparent;
+            transform: rotateX(75deg) translateZ(-100px);
+            animation: rotateStars 120s infinite linear;
         }
 
-        section {
-            padding: 6rem 0;
-            position: relative;
+        @keyframes rotateStars {
+            0% { transform: rotateX(75deg) rotateY(0deg) translateZ(-100px); }
+            100% { transform: rotateX(75deg) rotateY(360deg) translateZ(-100px); }
         }
 
-        /* gradient backgrounds */
-        .hero, .footer {
-            background: radial-gradient(ellipse at 30% 40%, #1e1b4b, #0b0c15 70%);
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255,255,255,0.8), 0 0 30px #7aa2f7;
+            animation: twinkle 4s infinite alternate;
         }
 
-        /* headings */
-        h1 {
-            font-size: clamp(3rem, 8vw, 5.5rem);
-            font-weight: 800;
-            line-height: 1.1;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #fff, #c4b5fd, #818cf8);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 1rem;
+        @keyframes twinkle {
+            0% { opacity: 0.2; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.3); }
         }
 
-        h2 {
-            font-size: 2.8rem;
-            font-weight: 700;
-            background: linear-gradient(to right, #f0f0ff, #c7d2fe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 2rem;
-        }
-
-        h2 i {
-            color: #8b5cf6;
-            margin-right: 0.75rem;
-        }
-
-        .glow-text {
-            color: #ddd6fe;
-            font-size: 1.2rem;
-            max-width: 600px;
-        }
-
-        /* buttons */
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.2rem;
-            margin: 2.5rem 0 1rem;
-        }
-        .btn {
-            padding: 0.9rem 2.5rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            border: 1px solid transparent;
-            cursor: pointer;
+        /* floating glassmorphic orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.25), rgba(80,140,255,0.05));
             backdrop-filter: blur(4px);
-        }
-        .btn-primary {
-            background: #8b5cf6;
-            color: #fff;
-            box-shadow: 0 10px 25px -5px #6d28d9;
-        }
-        .btn-primary:hover {
-            background: #7c3aed;
-            transform: translateY(-4px);
-            box-shadow: 0 20px 30px -8px #5b21b6;
-        }
-        .btn-outline {
-            border: 1px solid rgba(255,255,255,0.2);
-            background: rgba(255,255,255,0.02);
-            color: #e2e0ff;
-            backdrop-filter: blur(8px);
-        }
-        .btn-outline:hover {
-            border-color: #a78bfa;
-            background: rgba(139, 92, 246, 0.15);
-            transform: translateY(-4px);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 25px 50px -8px rgba(0,0,0,0.6), inset 0 0 40px rgba(255,255,255,0.15);
+            transform-style: preserve-3d;
+            animation: floatOrb 18s infinite alternate ease-in-out;
         }
 
-        /* navbar */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem 2rem;
+        @keyframes floatOrb {
+            0% { transform: translateY(0px) translateX(0) rotateZ(0deg) scale(1); }
+            100% { transform: translateY(-40px) translateX(20px) rotateZ(8deg) scale(1.05); }
+        }
+
+        /* MAIN CONTENT WRAPPER with 3D card effects */
+        .content {
+            position: relative;
+            z-index: 10;
             max-width: 1400px;
             margin: 0 auto;
-            position: relative;
-            z-index: 100;
+            padding: 2rem 4rem;
+            transform-style: preserve-3d;
+            display: flex;
+            flex-direction: column;
+            gap: 6rem;
         }
-        .logo {
-            font-size: 2rem;
-            font-weight: 800;
-            background: linear-gradient(145deg, #ffffff, #a78bfa);
+
+        /* HERO SECTION — 3D tilt card */
+        .hero-card {
+            background: rgba(20, 30, 50, 0.2);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 3rem;
+            padding: 4rem 5rem;
+            box-shadow: 0 40px 70px rgba(0, 0, 0, 0.6), 
+                        0 0 0 2px rgba(120, 180, 255, 0.1) inset,
+                        0 20px 40px -10px #1e3a8a33;
+            transform: rotateX(2deg) rotateY(-2deg) translateZ(30px);
+            transition: transform 0.3s ease, box-shadow 0.4s;
+            animation: floatHero 8s infinite alternate;
+            transform-style: preserve-3d;
+        }
+
+        .hero-card:hover {
+            transform: rotateX(0deg) rotateY(0deg) translateZ(50px);
+            box-shadow: 0 60px 100px rgba(0, 150, 255, 0.3), 0 0 0 3px rgba(120, 200, 255, 0.3) inset;
+        }
+
+        @keyframes floatHero {
+            0% { transform: rotateX(2deg) rotateY(-2deg) translateY(0px) translateZ(30px); }
+            100% { transform: rotateX(1deg) rotateY(-1deg) translateY(-15px) translateZ(45px); }
+        }
+
+        .hero-title {
+            font-size: 6rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            line-height: 1;
+            background: linear-gradient(135deg, #fff, #aaccff, #7aa2f7);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: -0.5px;
-        }
-        .nav-links {
-            display: flex;
-            gap: 2.5rem;
-        }
-        .nav-links a {
-            text-decoration: none;
-            color: #e0e7ff;
-            font-weight: 500;
-            font-size: 1.1rem;
-            transition: 0.2s;
-            border-bottom: 2px solid transparent;
-            padding-bottom: 5px;
-        }
-        .nav-links a:hover {
-            color: white;
-            border-bottom-color: #8b5cf6;
-        }
-        .menu-toggle {
-            display: none;
-            font-size: 2rem;
-            cursor: pointer;
+            text-shadow: 0 20px 40px rgba(0, 20, 80, 0.8), 0 0 80px #3f6ef0;
+            transform: translateZ(40px);
         }
 
-        /* hero layout */
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            gap: 3rem;
-        }
-        .hero-badge {
-            background: rgba(139, 92, 246, 0.2);
-            border: 1px solid #3b2a6b;
-            border-radius: 50px;
-            padding: 0.3rem 1.2rem;
-            font-size: 0.9rem;
-            display: inline-block;
-            margin-bottom: 1.5rem;
+        .hero-sub {
+            font-size: 1.6rem;
+            font-weight: 300;
+            max-width: 700px;
+            margin-top: 1.5rem;
+            color: rgba(220, 235, 255, 0.9);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.6);
+            transform: translateZ(25px);
             backdrop-filter: blur(5px);
-            color: #b9aafd;
-        }
-        .floating-card {
-            background: rgba(20, 15, 45, 0.45);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.05);
-            border-radius: 40px;
-            padding: 2.5rem 2rem;
-            box-shadow: 0 35px 75px rgba(0,0,0,0.6);
-            transform: perspective(1000px) rotateY(-5deg) rotateX(2deg);
-            transition: 0.5s;
-        }
-        .floating-card:hover {
-            transform: perspective(1000px) rotateY(-3deg) rotateX(1deg) translateY(-8px);
-        }
-        .code-icon {
-            display: flex;
-            gap: 1rem;
-            font-size: 2.8rem;
-            color: #cbd5e1;
-            margin-bottom: 1rem;
-        }
-        .code-icon i {
-            background: #15122e;
-            padding: 0.8rem;
-            border-radius: 20px;
-            border: 1px solid #342e5a;
         }
 
-        /* stats */
-        .stats {
-            display: flex;
-            gap: 2.5rem;
-            margin-top: 2rem;
-        }
-        .stat-item h3 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #f5f3ff;
-        }
-        .stat-item p {
-            color: #9ca3af;
-            letter-spacing: 1px;
+        /* 3D GRID SECTION — cards with depth */
+        .grid-title {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+            transform: translateZ(20px);
+            text-shadow: 0 5px 20px #2a4caf;
         }
 
-        /* services / cards */
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            transform-style: preserve-3d;
         }
-        .service-card {
-            background: rgba(18, 14, 43, 0.5);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(139, 92, 246, 0.2);
-            border-radius: 30px;
-            padding: 2.2rem 1.8rem;
-            transition: 0.25s ease;
-            box-shadow: 0 15px 35px -15px #000000;
+
+        .glass-card {
+            background: rgba(18, 25, 45, 0.5);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 2.5rem;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(200, 220, 255, 0.1) inset;
+            transition: all 0.4s cubic-bezier(0.2, 0.9, 0.3, 1.3);
+            transform: rotateY(0deg) rotateX(0deg) translateZ(0px);
+            animation: cardFloat 10s infinite alternate;
+            transform-style: preserve-3d;
+            cursor: pointer;
         }
-        .service-card:hover {
-            border-color: #8b5cf6;
-            transform: translateY(-12px) scale(1.02);
-            background: #151032;
+
+        .glass-card:hover {
+            transform: rotateY(6deg) rotateX(2deg) translateZ(40px) scale(1.05);
+            box-shadow: 0 40px 100px rgba(30, 144, 255, 0.5), 0 0 25px #1e90ff55, 0 0 0 2px rgba(255,255,255,0.3) inset;
+            background: rgba(25, 35, 60, 0.7);
+            border-color: rgba(255,255,255,0.3);
         }
-        .service-card i {
-            font-size: 2.7rem;
-            background: linear-gradient(145deg, #a78bfa, #6366f1);
+
+        @keyframes cardFloat {
+            0% { transform: translateY(0px) rotateY(0deg); }
+            100% { transform: translateY(-20px) rotateY(2deg); }
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #9ab9ff, #ffffff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 1.5rem;
-        }
-        .service-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 0.8rem;
-        }
-        .service-card p {
-            color: #b9b7d3;
+            transform: translateZ(30px);
+            display: inline-block;
+            filter: drop-shadow(0 0 20px #3f6ef0);
         }
 
-        /* project showcase */
-        .project-slider {
-            display: flex;
-            gap: 2rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        .project-item {
-            flex: 1 1 280px;
-            background: #140f2b;
-            border-radius: 30px;
-            padding: 1.8rem;
-            border: 1px solid #2a2352;
-            transition: all 0.3s;
-        }
-        .project-item:hover {
-            border-color: #8b5cf6;
-            box-shadow: 0 30px 40px -20px #5f3dc3;
-        }
-        .project-img {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #2e265c, #18133a);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 3rem;
-            color: #c9b6ff;
-            margin-bottom: 1.5rem;
-        }
-
-        /* contact section */
-        .contact-form {
-            background: rgba(15, 12, 38, 0.7);
-            backdrop-filter: blur(12px);
-            border: 1px solid #322b5a;
-            border-radius: 50px;
-            padding: 3rem;
-            max-width: 800px;
-            margin: 2rem auto 0;
-        }
-        .input-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-        .input-group input, .contact-form textarea {
-            width: 100%;
-            background: #0f0c24;
-            border: 1px solid #2e265c;
-            border-radius: 60px;
-            padding: 1.2rem 2rem;
-            font-size: 1.1rem;
-            color: white;
-            outline: none;
-            transition: 0.2s;
-        }
-        .input-group input:focus, .contact-form textarea:focus {
-            border-color: #a78bfa;
-            box-shadow: 0 0 0 4px rgba(167, 139, 250, 0.2);
-        }
-        .input-group input {
-            flex: 1 1 250px;
-        }
-        .contact-form textarea {
-            border-radius: 30px;
-            resize: vertical;
-            margin: 1.5rem 0;
-        }
-        .contact-form button {
-            border: none;
-            font-size: 1.3rem;
-            padding: 1rem 3rem;
-            border-radius: 60px;
-            background: #8b5cf6;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 8px 18px #4c1d95;
-        }
-        .contact-form button:hover {
-            background: #a78bfa;
-            transform: scale(1.02);
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem 0 3rem;
-            border-top: 1px solid #1e1a3a;
-        }
-        .social i {
+        .glass-card h3 {
             font-size: 2rem;
-            margin: 1rem 0.8rem;
-            color: #a78bfa;
-            transition: 0.2s;
-        }
-        .social i:hover {
-            color: white;
-            transform: translateY(-5px);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            transform: translateZ(25px);
         }
 
-        /* responsive */
+        .glass-card p {
+            color: #cdd9ff;
+            font-weight: 300;
+            transform: translateZ(20px);
+        }
+
+        /* stats section with 3D bars */
+        .stats-panel {
+            background: rgba(8, 12, 25, 0.4);
+            backdrop-filter: blur(20px);
+            border-radius: 3rem;
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 3rem;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            transform: rotateX(1deg) translateZ(10px);
+            box-shadow: 0 40px 70px -20px #00000080, 0 0 0 1px #294680 inset;
+        }
+
+        .stat-item {
+            text-align: center;
+            transform-style: preserve-3d;
+            transition: transform 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateZ(30px) scale(1.1);
+        }
+
+        .stat-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f0f9ff, #b3d9ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 40px #1e3c72;
+        }
+
+        .stat-label {
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            color: #b0caf5;
+        }
+
+        /* footer with 3D button */
+        .glow-button {
+            background: rgba(20, 40, 70, 0.4);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 4rem;
+            padding: 1.5rem 4rem;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s;
+            box-shadow: 0 20px 40px -10px #000, 0 0 60px #1e3b5a;
+            transform: translateZ(20px);
+            margin: 2rem auto;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .glow-button:hover {
+            background: rgba(50, 100, 200, 0.5);
+            border-color: white;
+            transform: translateZ(60px) scale(1.1);
+            box-shadow: 0 30px 80px #0044ff66, 0 0 30px cyan;
+        }
+
+        /* Floating shapes with 3D depth */
+        .floating-shape {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 40% 40%, #41b0e0, transparent 70%);
+            filter: blur(30px);
+            opacity: 0.3;
+            z-index: -1;
+            animation: shapeMove 25s infinite alternate;
+        }
+
+        @keyframes shapeMove {
+            0% { transform: translate(10%, 10%) rotate(0deg) scale(1); }
+            100% { transform: translate(40%, 60%) rotate(180deg) scale(1.5); }
+        }
+
+        /* Responsive */
         @media (max-width: 900px) {
-            .hero-grid { grid-template-columns: 1fr; }
-            .navbar .nav-links { display: none; }
-            .menu-toggle { display: block; }
-            .floating-card { transform: none; }
+            .content { padding: 2rem; gap: 3rem; }
+            .hero-title { font-size: 3.5rem; }
+            .hero-card { padding: 2.5rem; }
         }
     </style>
 </head>
 <body>
-    <!-- custom cursor (premium detail) -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-follower" id="cursorFollower"></div>
+    <!-- 3D cursor glow effect -->
+    <div class="cursor-glow" id="cursorGlow"></div>
 
-    <!-- navigation -->
-    <nav class="navbar">
-        <span class="logo">✦ NEBULA</span>
-        <div class="nav-links">
-            <a href="#">Home</a>
-            <a href="#work">Work</a>
-            <a href="#services">Services</a>
-            <a href="#contact">Contact</a>
-        </div>
-        <div class="menu-toggle"><i class="fas fa-bars"></i></div>
-    </nav>
+    <!-- Cosmos background with stars (3D rotation) -->
+    <div class="universe">
+        <div class="star-field" id="starfield"></div>
+        <!-- floating orbs with parallax -->
+        <div class="orb" style="width: 250px; height: 250px; top: 10%; left: 5%; animation-duration: 20s;"></div>
+        <div class="orb" style="width: 400px; height: 400px; bottom: -5%; right: 0%; background: radial-gradient(circle at 20% 20%, #3b5b9b33, transparent); animation-duration: 30s;"></div>
+        <div class="orb" style="width: 180px; height: 180px; top: 60%; left: 80%; background: radial-gradient(circle at 70% 30%, #6d8fd1, #1a2645); animation-duration: 14s;"></div>
+    </div>
 
-    <!-- hero section -->
-    <section class="hero">
-        <div class="container hero-grid">
-            <div class="hero-content">
-                <span class="hero-badge"><i class="fas fa-crown" style="margin-right: 8px;"></i> #1 design worldwide</span>
-                <h1>We build the best websites on earth.</h1>
-                <p class="glow-text">Minimal, futuristic, interactive — exactly what the world's top brands use. All in one file.</p>
-                <div class="btn-group">
-                    <a href="#contact" class="btn btn-primary"><i class="fas fa-bolt"></i> start project</a>
-                    <a href="#work" class="btn btn-outline"><i class="fas fa-eye"></i> see showcase</a>
-                </div>
-                <div class="stats">
-                    <div class="stat-item"><h3>150+</h3><p>global awards</p></div>
-                    <div class="stat-item"><h3>99%</h3><p>happy clients</p></div>
-                </div>
-            </div>
-            <div class="floating-card">
-                <div class="code-icon">
-                    <i class="fab fa-html5"></i>
-                    <i class="fab fa-css3-alt"></i>
-                    <i class="fab fa-js"></i>
-                </div>
-                <h3 style="font-size: 2rem; margin-bottom: 1rem;">"single file —<br>infinite magic"</h3>
-                <p style="color: #cbd5e1;">HTML, CSS, JavaScript combined with glassmorphism, 3D transforms, and smooth interactions. Best in class.</p>
-                <div style="margin: 2rem 0 1rem;"><i class="fas fa-code" style="color: #8b5cf6;"></i>  <span style="color: #a5b4fc;">built with passion</span></div>
-                <div style="background: #0f0c24; border-radius: 30px; padding: 0.8rem 1.5rem; border: 1px solid #3f3470;">
-                    <i class="fas fa-star" style="color: #fbbf24;"></i><i class="fas fa-star" style="color: #fbbf24;"></i><i class="fas fa-star" style="color: #fbbf24;"></i><i class="fas fa-star" style="color: #fbbf24;"></i><i class="fas fa-star" style="color: #fbbf24;"></i> <span style="margin-left: 10px;">5.0 (2.4k reviews)</span>
-                </div>
+    <!-- Main 3D content -->
+    <div class="content">
+        <!-- Hero 3D tilt card -->
+        <div class="hero-card">
+            <h1 class="hero-title">INFINITY <br> STUDIOS</h1>
+            <p class="hero-sub">We craft immersive 3D web experiences — the best in the universe. Scroll to explore the depth.</p>
+            <div style="margin-top: 2.5rem; display: flex; gap: 1.5rem; transform: translateZ(30px);">
+                <span class="glow-button" style="padding: 1rem 2.5rem; font-size: 1.2rem;">Launch portal</span>
+                <span class="glow-button" style="padding: 1rem 2.5rem; background: rgba(10,20,40,0.7);">Explore</span>
             </div>
         </div>
-    </section>
 
-    <!-- services / features -->
-    <section id="services">
-        <div class="container">
-            <h2><i class="fas fa-circle-nodes"></i> universe‑class services</h2>
+        <!-- 3D card grid -->
+        <div>
+            <h2 class="grid-title">✧  depth creations  ✧</h2>
             <div class="card-grid">
-                <div class="service-card"><i class="fas fa-cubes"></i><h3>3D interactive</h3><p>Three.js powered concepts, buttery 60fps, camera moves — we redefine UX.</p></div>
-                <div class="service-card"><i class="fas fa-meteor"></i><h3>motion design</h3><p>GSAP, Lottie, custom micro‑interactions that make users stay.</p></div>
-                <div class="service-card"><i class="fas fa-mobile-alt"></i><h3>pixel perfect</h3><p>Responsive from 320px to 4K, each component looks razor sharp.</p></div>
-                <div class="service-card"><i class="fas fa-chart-line"></i><h3>SEO • speed</h3><p>100/100 lighthouse, because best design also loads instantly.</p></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- work / projects (best of the best) -->
-    <section id="work" style="background: #080715;">
-        <div class="container">
-            <h2><i class="fas fa-globe"></i> award‑winning projects</h2>
-            <div class="project-slider">
-                <div class="project-item">
-                    <div class="project-img"><i class="fas fa-satellite"></i></div>
-                    <h3>ORBIT</h3>
-                    <p>Interactive space agency website · Awwwards SOTD</p>
+                <div class="glass-card">
+                    <i class="fas fa-cube card-icon"></i>
+                    <h3>3D voxel</h3>
+                    <p>Volumetric designs that push the boundaries of depth and motion, rendered in real-time.</p>
                 </div>
-                <div class="project-item">
-                    <div class="project-img"><i class="fas fa-fan"></i></div>
-                    <h3>ZEPHYR</h3>
-                    <p>minimal fashion brand · CSS only animations</p>
+                <div class="glass-card">
+                    <i class="fas fa-star card-icon"></i>
+                    <h3>Neural glow</h3>
+                    <p>Generative particles with ai-infused light, every hover creates a unique cosmic reaction.</p>
                 </div>
-                <div class="project-item">
-                    <div class="project-img"><i class="fas fa-robot"></i></div>
-                    <h3>NEURA</h3>
-                    <p>AI startup · 3D metamodern glassmorphism</p>
+                <div class="glass-card">
+                    <i class="fas fa-eye card-icon"></i>
+                    <h3>Holographic UI</h3>
+                    <p>Glassmorphic layers with true 3D transforms — depth as you've never seen.</p>
+                </div>
+                <div class="glass-card">
+                    <i class="fas fa-infinity card-icon"></i>
+                    <h3>infinite loop</h3>
+                    <p>continuous animation systems that feel alive, with zero frame drops.</p>
                 </div>
             </div>
         </div>
-    </section>
 
-    <!-- contact / get in touch (with javascript validation & effect) -->
-    <section id="contact">
-        <div class="container">
-            <h2 style="text-align: center;"><i class="fas fa-paper-plane"></i> let's create the best website</h2>
-            <div class="contact-form" id="contactForm">
-                <div class="input-group">
-                    <input type="text" placeholder="your name" id="nameInput">
-                    <input type="email" placeholder="email address" id="emailInput">
-                </div>
-                <textarea rows="4" placeholder="tell about your project..." id="messageInput"></textarea>
-                <button id="submitBtn"><i class="fas fa-rocket" style="margin-right: 10px;"></i> send message</button>
-                <p id="formFeedback" style="margin-top: 1.5rem; font-weight: 300; min-height: 24px;"></p>
+        <!-- 3D stats panel -->
+        <div class="stats-panel">
+            <div class="stat-item">
+                <div class="stat-number">+380</div>
+                <div class="stat-label">3D projects</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">immersion</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">∞</div>
+                <div class="stat-label">dimensions</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">8k</div>
+                <div class="stat-label">particles</div>
             </div>
         </div>
-    </section>
 
-    <!-- footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="social">
-                <i class="fab fa-x-twitter"></i>
-                <i class="fab fa-instagram"></i>
-                <i class="fab fa-dribbble"></i>
-                <i class="fab fa-behance"></i>
-            </div>
-            <p style="color: #7d7ba0;">© 2025 NEBULA — best website design worldwide · all in one file</p>
+        <!-- final call to action with 3D button -->
+        <div style="display: flex; justify-content: center;">
+            <button class="glow-button" id="dimensionalButton"><i class="fas fa-crown" style="margin-right: 15px;"></i>activate 4th dimension</button>
         </div>
-    </footer>
+    </div>
 
-    <!-- javascript: custom cursor + form handler + interactive micro -->
+    <!-- extra floating shapes -->
+    <div class="floating-shape" style="top: 20%; left: 70%; background: radial-gradient(circle, #4361ee, transparent 70%);"></div>
+    <div class="floating-shape" style="bottom: 10%; left: 20%; width: 350px; height: 350px; background: radial-gradient(circle, #9c6ee7, transparent);"></div>
+
     <script>
         (function() {
-            // ===== CUSTOM CURSOR (premium) =====
-            const cursor = document.getElementById('cursor');
-            const cursorFollower = document.getElementById('cursorFollower');
-            
-            if (cursor && cursorFollower) {
-                document.addEventListener('mousemove', (e) => {
-                    cursor.style.left = e.clientX + 'px';
-                    cursor.style.top = e.clientY + 'px';
-                    
-                    // follower with slight delay (using RAF for smoothness)
-                    requestAnimationFrame(() => {
-                        cursorFollower.style.left = e.clientX + 'px';
-                        cursorFollower.style.top = e.clientY + 'px';
-                    });
-                });
+            // 1. Generate 1000 stars with random positions and depths (3D starfield)
+            const starfield = document.getElementById('starfield');
+            for (let i = 0; i < 800; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                const size = Math.random() * 3 + 1; // 1px to 4px
+                const x = Math.random() * 100; // vw%
+                const y = Math.random() * 100; // vh%
+                const z = Math.random() * 400 - 200; // translateZ range
+                const delay = Math.random() * 5;
+                const duration = Math.random() * 6 + 4;
 
-                // hover effect on interactive elements
-                const interactiveElems = document.querySelectorAll('a, button, .service-card, .project-item, .btn');
-                interactiveElems.forEach(el => {
-                    el.addEventListener('mouseenter', () => {
-                        cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
-                        cursor.style.background = '#f0e9ff';
-                        cursorFollower.style.transform = 'translate(-50%, -50%) scale(1.5)';
-                        cursorFollower.style.borderColor = '#c4b5fd';
-                    });
-                    el.addEventListener('mouseleave', () => {
-                        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
-                        cursor.style.background = '#c4b5fd';
-                        cursorFollower.style.transform = 'translate(-50%, -50%) scale(1)';
-                        cursorFollower.style.borderColor = 'rgba(167, 139, 250, 0.4)';
-                    });
-                });
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.left = x + '%';
+                star.style.top = y + '%';
+                star.style.transform = `translateZ(${z}px)`;
+                star.style.animation = `twinkle ${duration}s infinite alternate ${delay}s`;
+                starfield.appendChild(star);
             }
 
-            // ===== CONTACT FORM (with javascript interaction) =====
-            const submitBtn = document.getElementById('submitBtn');
-            const nameInput = document.getElementById('nameInput');
-            const emailInput = document.getElementById('emailInput');
-            const messageInput = document.getElementById('messageInput');
-            const feedback = document.getElementById('formFeedback');
+            // 2. custom cursor glow that follows mouse with 3D offset feel
+            const cursor = document.getElementById('cursorGlow');
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX + 'px';
+                cursor.style.top = e.clientY + 'px';
+            });
 
-            if (submitBtn) {
-                submitBtn.addEventListener('click', (e) => {
-                    e.preventDefault();  // no page reload
-                    
-                    let nameVal = nameInput ? nameInput.value.trim() : '';
-                    let emailVal = emailInput ? emailInput.value.trim() : '';
-                    let msgVal = messageInput ? messageInput.value.trim() : '';
-
-                    if (!nameVal || !emailVal || !msgVal) {
-                        feedback.innerHTML = '<span style="color: #fca5a5;"><i class="fas fa-exclamation-triangle"></i> all fields required — but you can still admire the design :)</span>';
-                        return;
-                    }
-                    if (!emailVal.includes('@') || !emailVal.includes('.')) {
-                        feedback.innerHTML = '<span style="color: #fcd34d;"><i class="fas fa-envelope"></i> please use a valid email. (mock mode, no data sent)</span>';
-                        return;
-                    }
-
-                    // success simulation (best website demo)
-                    feedback.innerHTML = '<span style="color: #a7f3d0;"><i class="fas fa-check-circle"></i> message received! (this is a demo — but you rock 🚀)</span>';
-                    
-                    // optional clear fields (just for ux)
-                    if (nameInput) nameInput.value = '';
-                    if (emailInput) emailInput.value = '';
-                    if (messageInput) messageInput.value = '';
-                });
-            }
-
-            // ===== extra interactive hover effect on cards (parallax micro) =====
-            const cards = document.querySelectorAll('.service-card, .project-item');
-            cards.forEach(card => {
-                card.addEventListener('mousemove', (e) => {
-                    const rect = card.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const centerX = rect.width / 2;
-                    const centerY = rect.height / 2;
-                    const rotateX = (y - centerY) / 20;
-                    const rotateY = (centerX - x) / 20;
-                    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
-                });
-                card.addEventListener('mouseleave', () => {
-                    card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) scale(1)';
+            // 3. additional parallax effect: move orbs slightly on mouse move
+            const orbs = document.querySelectorAll('.orb');
+            document.addEventListener('mousemove', (e) => {
+                const mouseX = e.clientX / window.innerWidth - 0.5;
+                const mouseY = e.clientY / window.innerHeight - 0.5;
+                orbs.forEach((orb, index) => {
+                    const speed = index + 1 * 0.02;
+                    const x = mouseX * 30 * (index+1);
+                    const y = mouseY * 20 * (index+1);
+                    orb.style.transform = `translate(${x}px, ${y}px) rotate(${mouseX*5}deg)`;
                 });
             });
 
-            // ===== simple counter stats (animated when visible) =====
-            const statNumbers = document.querySelectorAll('.stat-item h3');
-            const hasAnimated = {};
+            // 4. interactive button : add 3D rotation to whole content
+            const dimBtn = document.getElementById('dimensionalButton');
+            let rotated = false;
+            dimBtn.addEventListener('click', () => {
+                const content = document.querySelector('.content');
+                if (!rotated) {
+                    content.style.transform = 'rotateY(6deg) rotateX(3deg) scale(0.98)';
+                    content.style.transition = 'transform 1.2s cubic-bezier(0.2,1,0.3,1)';
+                    dimBtn.innerHTML = '<i class="fas fa-crown" style="margin-right:15px;"></i>4D activated ✦';
+                } else {
+                    content.style.transform = 'rotateY(0deg) rotateX(0deg) scale(1)';
+                    dimBtn.innerHTML = '<i class="fas fa-crown" style="margin-right:15px;"></i>activate 4th dimension';
+                }
+                rotated = !rotated;
+            });
 
-            function animateStats() {
-                statNumbers.forEach((stat, idx) => {
-                    if (hasAnimated[idx]) return;
-                    const rect = stat.getBoundingClientRect();
-                    if (rect.top < window.innerHeight - 100) {
-                        hasAnimated[idx] = true;
-                        let target = stat.innerText.replace('+', '').replace('%', '');
-                        let suffix = stat.innerText.includes('+') ? '+' : (stat.innerText.includes('%') ? '%' : '');
-                        let start = 0;
-                        let end = parseInt(target);
-                        let duration = 1500;
-                        let stepTime = 20;
-                        let steps = duration / stepTime;
-                        let increment = end / steps;
-                        let current = 0;
-                        let timer = setInterval(() => {
-                            current += increment;
-                            if (current >= end) {
-                                stat.innerText = end + suffix;
-                                clearInterval(timer);
-                            } else {
-                                stat.innerText = Math.floor(current) + suffix;
-                            }
-                        }, stepTime);
-                    }
-                });
-            }
+            // 5. additional tilt effect on hero card based on mouse (3D depth)
+            const hero = document.querySelector('.hero-card');
+            hero.addEventListener('mousemove', (e) => {
+                const rect = hero.getBoundingClientRect();
+                const x = e.clientX - rect.left; 
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                const rotateX = (y - centerY) / 20;  // max 5deg
+                const rotateY = (centerX - x) / 20;
+                hero.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(50px)`;
+            });
+            hero.addEventListener('mouseleave', () => {
+                hero.style.transform = 'rotateX(2deg) rotateY(-2deg) translateZ(30px)';
+            });
 
-            window.addEventListener('scroll', animateStats);
-            window.addEventListener('load', animateStats);
+            // 6. Random shooting star effect (add transient star)
+            setInterval(() => {
+                const shooting = document.createElement('div');
+                shooting.className = 'star';
+                shooting.style.width = '6px';
+                shooting.style.height = '6px';
+                shooting.style.boxShadow = '0 0 30px cyan, 0 0 60px blue';
+                shooting.style.background = 'white';
+                shooting.style.left = Math.random() * 100 + '%';
+                shooting.style.top = Math.random() * 100 + '%';
+                shooting.style.animation = 'shoot 1.5s forwards';
+                shooting.style.opacity = '1';
+                const style = document.createElement('style');
+                if (!document.getElementById('shootKeyframes')) {
+                    const keyframes = `
+                        @keyframes shoot {
+                            0% { transform: translate(0, 0) scale(1); opacity: 1; width: 8px; height: 8px; }
+                            100% { transform: translate(300px, 200px) scale(0.2); opacity: 0; }
+                        }
+                    `;
+                    style.id = 'shootKeyframes';
+                    style.innerHTML = keyframes;
+                    document.head.appendChild(style);
+                }
+                document.querySelector('.universe').appendChild(shooting);
+                setTimeout(() => shooting.remove(), 1500);
+            }, 3200);
         })();
     </script>
+
+    <!-- tiny additional style for shooting star integration -->
+    <style>
+        .star.shooting-star {
+            animation: shoot 1s linear forwards;
+        }
+        /* smooth transitions */
+        .content, .hero-card, .glass-card, .glow-button {
+            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        /* extra polish */
+        ::selection {
+            background: #2a5c9e;
+            color: white;
+        }
+    </style>
 </body>
 </html>
