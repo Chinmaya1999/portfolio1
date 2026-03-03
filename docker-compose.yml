@@ -1,10 +1,29 @@
 version: '3.8'
 
 services:
+
   portfolio:
     image: awsmallick1999/portfolio:latest
     ports:
       - "80:80"
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+
+  react-app:
+    image: awsmallick1999/react-app:latest
+    ports:
+      - "81:80"
+    deploy:
+      replicas: 3
+      restart_policy:
+        condition: on-failure
+
+  mb-image:
+    image: awsmallick1999/mb-image:latest
+    ports:
+      - "82:80"
     deploy:
       replicas: 3
       restart_policy:
