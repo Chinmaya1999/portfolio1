@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   portfolio:
-    image: chinmaya1999/portfolio:latest
+    image: awsmallick1999/portfolio:latest
     ports:
       - "80:80"
     deploy:
